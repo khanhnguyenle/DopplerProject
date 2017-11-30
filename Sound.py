@@ -1,12 +1,14 @@
 import pyaudio
 import wave
+from scipy.fftpack import fft
+import numpy as np
 
 def record():
     CHUNK = 1024
     FORMAT = pyaudio.paInt16
-    CHANNELS = 2
+    CHANNELS = 1
     RATE = 44100
-    RECORD_SECONDS = 5
+    RECORD_SECONDS = 1
     WAVE_OUTPUT_FILENAME = "output.wav"
 
     p = pyaudio.PyAudio()
@@ -38,5 +40,18 @@ def record():
     wf.writeframes(b''.join(frames))
     wf.close()
 
-def get_freq():
-    
+def get_freq(filename):
+    wavefile = wave.open(filename, 'rb')
+    width = wavefile.getsampwidth()
+    r = wavefile.getframerate()
+    window = np.blackman()
+
+    p = pyaudio.PyAudio()
+
+    stream = p.open(p.get_format_from_width((wavefile.getsampwidth()), channels = wavefile.getnchannels(),
+                                            rate = r, output = True))
+    data = wavefile.readframes(1024)
+
+if __name__ == '__main__':
+    record()
+    get_freq("output.wav")
