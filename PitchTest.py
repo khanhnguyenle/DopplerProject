@@ -2,14 +2,15 @@ import wave
 import numpy as np
 
 def pitch_test():
-    wavin = wave.open('input.wav', 'r')
+    #Credit to Patrick Maupin url:https://stackoverflow.com/questions/43162121/python-convert-mono-wave-file-to-stereo
+    wavin = wave.open('cat.wav', 'r')
     para = list(wavin.getparams())
     para[3] = 0
     para = tuple(para)
     wavout = wave.open('output.wav', 'w')
     wavout.setparams(para)
 
-    fr = 20
+    fr = 200
     sz = wavin.getframerate() // fr  # Read and process 1/fr second at a time.
     # A larger number for fr means less reverb.
     c = int(wavin.getnframes() / sz)  # count of the whole file
@@ -25,3 +26,6 @@ def pitch_test():
         wavout.writeframes(ns.tostring())
     wavin.close()
     wavout.close()
+
+if __name__ == '__main__':
+    pitch_test()

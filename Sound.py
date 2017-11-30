@@ -6,7 +6,7 @@ import numpy as np
 def record():
     CHUNK = 1024
     FORMAT = pyaudio.paInt16
-    CHANNELS = 1
+    CHANNELS = 2
     RATE = 44100
     RECORD_SECONDS = 1
     WAVE_OUTPUT_FILENAME = "output.wav"
