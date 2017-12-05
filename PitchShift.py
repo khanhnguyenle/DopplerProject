@@ -20,7 +20,7 @@ def pitch_shift(filename, shift):
         left, right = da[0::2], da[1::2]  # left and right channel
         lf, rf = np.fft.rfft(left), np.fft.rfft(right)
         lf, rf = np.roll(lf, shift), np.roll(rf, shift)
-        lf[0:shift], rf[0:shift] = 0, 0
+        #lf[0:shift], rf[0:shift] = 0, 0
         nl, nr = np.fft.irfft(lf), np.fft.irfft(rf)
         ns = np.column_stack((nl, nr)).ravel().astype(np.int16)
         wavout.writeframes(ns.tostring())
@@ -29,4 +29,4 @@ def pitch_shift(filename, shift):
 
 
 if __name__ == '__main__':
-    pitch_shift('sine.wav', 1000)
+    pitch_shift('sine.wav', 100)
